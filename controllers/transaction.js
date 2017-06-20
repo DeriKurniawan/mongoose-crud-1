@@ -4,7 +4,9 @@ const count = require('../helpers/date_count');
 var methods = {}
 
 methods.showAll = function(req, res){
-  Transaction.find({}, (err, result)=>{
+  Transaction.find({})
+  .populate('booklist')
+  .exec((err, result)=>{
     if(err){
       res.status(500).send({
         msg: 'something wrong in database',
@@ -17,7 +19,9 @@ methods.showAll = function(req, res){
 }
 
 methods.show = function(req, res){
-  Transaction.findById(req.params.id, (err, result)=>{
+  Transaction.findById(req.params.id)
+  .populate('booklist')
+  .exec((err, result)=>{
       if(err){
         res.status(500).send({
           msg: 'something wrong in database',
@@ -88,6 +92,23 @@ methods.update = function(req, res){
             data: result
           })
         }
+      })
+    }
+  })
+}
+
+methods.delete = function(req, res){
+  Transaction.findByIdAndRemove(req.params.id)
+  .exec((err, result)=>{
+    if(err){
+      res.status(500).send({
+        msg: 'something wrong in database',
+        error: err
+      })
+    } else {
+      res.send({
+        msg: 'success to delete data of customer',
+        data: result
       })
     }
   })
