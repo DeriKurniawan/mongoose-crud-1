@@ -28,6 +28,53 @@ methods.showAll = function(req, res){
   })
 }
 
-//methods
+methods.create = function(req, res){
+  //console.log('ini req.body di book.create : ', req.body);
+  req.body.stock = Number(req.body.stock);
+  let body = req.body;
+  Book.create(body, (err, result)=>{
+    if(err){
+      res.status(500).send({
+        msg: 'something wrong in databse',
+        error: err
+      })
+    } else {
+      res.send(result)
+    }
+  })
+}
+
+methods.update = function(req, res){
+    Book.findById(req.params.id, (err, data)=>{
+      if(err){
+        res.status(500).send({
+          msg: 'something wrong in databse',
+          error: err
+        })
+      } else {
+        //console.log('ini req.body di book.update : ', req.body);
+        //console.log('ini data di book.update : ', data);
+        let body = req.body;
+        data.isbn = body.isbn || data.isbn
+        data.title = body.title || data.title
+        data.author = body.author || data.author
+        data.category = body.category || data.category
+        data.stock = Number(body.stock) || data.stock
+
+        data.save((err, result)=>{
+          if(err){
+            res.status(500).send({
+              msg: 'something wrong in databse',
+              error: err
+            })
+          } else {
+            res.send(result)
+          }
+        })
+      }
+    })
+}
+
+
 
 module.exports = methods;
