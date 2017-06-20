@@ -37,7 +37,12 @@ methods.create = function(req, res){
       inDate = body.in_date;
   Transaction.create({
     memberid: body.memberid,
-    days:
+    days: count.getDateSum(outDate, inDate),
+    out_date: outDate,
+    due_date: dueDate,
+    in_date: inDate,
+    fine: count.getFine(outDate, dueDate, inDate),
+    booklist: req.body.booklist
   }, (err, result)=>{
     if(err){
       res.status(500).send({
