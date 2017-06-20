@@ -46,4 +46,37 @@ methods.create = function(req, res){
   })
 }
 
+methods.update = function(req, res){
+  Customer.findById(req.params.id, (err, data)=>{
+    if(err){
+      res.status(500).send({
+        msg: 'something wrong in database',
+        error: err
+      })
+    } else {
+      //console.log('ini adalah isi dari data di customer.update : ', data)
+      let body = req.body;
+      data.name = body.name || data.name
+      data.memberid = body.memberid || data.memberid
+      data.address = body.address || data.address
+      data.zipcode = body.zipcode || data.zipcode
+      data.phone = body.phone || data.phone
+
+      data.save((err, result)=>{
+        if(err){
+          res.status(500).send({
+            msg: 'something wrong in database',
+            error: err
+          })
+        } else {
+          res.send({
+            msg: 'success to update data of customer',
+            data: result
+          })
+        }
+      })
+    }
+  })
+}
+
 module.exports = methods
