@@ -30,24 +30,27 @@ methods.show = function(req, res){
       } else {
         res.send(result)
       }
-    })
-  }
+  })
 }
 
 methods.create = function(req, res){
   var body = req.body;
+  //console.log('ini body di transaction.create: ', body)
   var dueDate = body.due_date,
       outDate = body.out_date,
       inDate = body.in_date;
+  var bookSumary = body.booklist.length;
+  console.log('ini req.body', req.body);
   Transaction.create({
     memberid: body.memberid,
     days: count.getDateSum(outDate, inDate),
     out_date: outDate,
     due_date: dueDate,
     in_date: inDate,
-    fine: count.getFine(outDate, dueDate, inDate),
+    fine: count.getFine(outDate, dueDate, inDate, bookSumary),
     booklist: req.body.booklist
   }, (err, result)=>{
+    console.log('ini adalah result di transaction.create ', result);
     if(err){
       res.status(500).send({
         msg: 'something wrong in database',

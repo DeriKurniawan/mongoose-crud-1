@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.schema;
+var Schema = mongoose.Schema;
 
 var TransactionSchema = new Schema({
   memberid: String,
@@ -19,7 +19,7 @@ var TransactionSchema = new Schema({
   fine: Number,
   booklist: [
     {
-      type: Schema.Type.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Book'
     }
   ]
