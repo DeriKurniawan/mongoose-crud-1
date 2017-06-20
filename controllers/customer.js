@@ -79,4 +79,20 @@ methods.update = function(req, res){
   })
 }
 
+methods.delete = function(req, res){
+  Book.findByIdAndRemove(req.params.id, (err, result)=>{
+    if(err){
+      res.status(500).send({
+        msg: 'something wrong in database',
+        error: err
+      })
+    } else {
+      res.send({
+        msg: 'success to delte data of customer',
+        data: result
+      })
+    }
+  })
+}
+
 module.exports = methods
