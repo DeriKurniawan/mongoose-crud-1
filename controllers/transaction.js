@@ -58,4 +58,39 @@ methods.create = function(req, res){
   })
 }
 
+methods.update = function(req, res){
+  Transaction.findById(req.params.id, (err, data)=>{
+    if(err){
+      res.status(500).send({
+        msg: 'something wrong in database',
+        error: err
+      })
+    } else {
+      //console.log('ini adalah isi dari data di customer.update : ', data)
+      let body = req.body;
+      data.memberid = body.memberid || data.memberid
+      data.days= count.getDateSum(body.out_date, body.in_date) || data.days
+      data.out_date = body.out_date || data.out_date
+      data.due_date = body.due_date || data.due_date
+      data.in_date = body.in_date || data.in_date
+      data.fine = count.getFine(body.out_date, body.due_date, body.in_date) || data.fine
+      data.booklist = body.booklist || data.booklist
+
+      data.save((err, result)=>{
+        if(err){
+          res.status(500).send({
+            msg: 'something wrong in database',
+            error: err
+          })
+        } else {
+          res.send({
+            msg: 'success to update data of customer',
+            data: result
+          })
+        }
+      })
+    }
+  })
+}
+
 module.exports = methods;
