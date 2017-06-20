@@ -28,4 +28,22 @@ methods.showAll = function(req, res){
   })
 }
 
+methods.create = function(req, res){
+  //console.log('ini isi dari req.bady di customer.create : ', req.body)
+  let body = req.body
+  Customer.create(body, (err, result)=>{
+    if(err){
+      res.status(500).send({
+        msg: 'something wrong in database',
+        error: err
+      })
+    } else {
+      res.send({
+        msg: 'success to add new customer',
+        data: result
+      })
+    }
+  })
+}
+
 module.exports = methods
