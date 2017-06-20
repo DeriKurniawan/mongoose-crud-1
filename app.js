@@ -16,7 +16,7 @@ mongoose.connect(url, (err, res)=>{
 })
 
 var customer = require('./routes/customer');
-var transaction = require('./routes/transaction');
+//var transaction = require('./routes/transaction');
 var book = require('./routes/book');
 
 var app = express();
@@ -27,7 +27,7 @@ app.use(cookieParser());
 
 app.use('/api/book', book);
 app.use('/api/customer', customer);
-app.use('/api/transaction', transaction);
+//app.use('/api/transaction', transaction);
 
 app.listen(3000, ()=>{
   console.log('connected on port 3000');
