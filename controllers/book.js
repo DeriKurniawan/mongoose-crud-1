@@ -28,5 +28,6 @@ methods.showAll = function(req, res){
   })
 }
 
+//methods
 
 module.exports = methods;
