@@ -39,7 +39,10 @@ methods.create = function(req, res){
         error: err
       })
     } else {
-      res.send(result)
+      res.send({
+        data: result,
+        msg: 'add book is success!'
+      })
     }
   })
 }
@@ -68,13 +71,30 @@ methods.update = function(req, res){
               error: err
             })
           } else {
-            res.send(result)
+            res.send({
+              data: result,
+              msg: 'updating book data is success!'
+            })
           }
         })
       }
     })
 }
 
-
+methods.delete = function(req, res){
+  Book.findByIdAndRemove(req.params.id, (err, result)=>{
+    if(err){
+      res.status(500).send({
+        msg: 'something wrong about database',
+        error: err
+      })
+    } else {
+      res.send({
+        msg: 'delete book is success!!',
+        data: result
+      })
+    }
+  })
+}
 
 module.exports = methods;
