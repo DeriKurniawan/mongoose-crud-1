@@ -1,5 +1,6 @@
 'use strict'
 const Transaction = require('../models/transaction');
+const count = require('../helpers/date_count');
 var methods = {}
 
 methods.showAll = function(req, res){
@@ -29,5 +30,27 @@ methods.show = function(req, res){
   }
 }
 
+methods.create = function(req, res){
+  var body = req.body;
+  var dueDate = body.due_date,
+      outDate = body.out_date,
+      inDate = body.in_date;
+  Transaction.create({
+    memberid: body.memberid,
+    days:
+  }, (err, result)=>{
+    if(err){
+      res.status(500).send({
+        msg: 'something wrong in database',
+        error: err
+      })
+    } else {
+      res.send({
+        msg: 'success to add new Transaction',
+        data: result
+      });
+    }
+  })
+}
 
 module.exports = methods;
