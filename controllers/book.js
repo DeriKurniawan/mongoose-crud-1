@@ -2,7 +2,7 @@
 const Book = require('../models/book');
 var methods = {}
 
-methods.show = function(req, res){
+methods.showAll = function(req, res){
   Book.find({}, (err, result)=>{
     if(err){
       res.status(500).send({
@@ -15,7 +15,7 @@ methods.show = function(req, res){
   })
 }
 
-methods.showAll = function(req, res){
+methods.show = function(req, res){
   Book.findById(req.params.id, (err, result)=>{
     if(err){
       res.status(500).send({

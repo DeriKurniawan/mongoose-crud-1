@@ -2,7 +2,7 @@
 const Customer = require('../models/customer');
 var methods = {}
 
-methods.show = function(req, res){
+methods.showAll = function(req, res){
   Customer.find({}, (err, result)=>{
     if(err){
       res.status(500).send({
@@ -15,7 +15,7 @@ methods.show = function(req, res){
   })
 }
 
-methods.showAll = function(req, res){
+methods.show = function(req, res){
   Customer.findById(req.params.id, (err, result)=>{
     if(err){
       res.status(500).send({
@@ -80,7 +80,7 @@ methods.update = function(req, res){
 }
 
 methods.delete = function(req, res){
-  Book.findByIdAndRemove(req.params.id, (err, result)=>{
+  Customer.findByIdAndRemove(req.params.id, (err, result)=>{
     if(err){
       res.status(500).send({
         msg: 'something wrong in database',
@@ -88,7 +88,7 @@ methods.delete = function(req, res){
       })
     } else {
       res.send({
-        msg: 'success to delte data of customer',
+        msg: 'success to delete data of customer',
         data: result
       })
     }
